@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+// 스프링 컨테이너 없이 테스트하는 단위 테스트
 class MemberServiceTest {
 
     MemberService memberService;
