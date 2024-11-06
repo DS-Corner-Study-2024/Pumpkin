@@ -1,7 +1,7 @@
 package hello.hello_spring;
 
+import hello.hello_spring.aop.TimeTraceAop;
 import hello.hello_spring.repository.MemberRepository;
-import hello.hello_spring.repository.MemoryMemberRepository;
 import hello.hello_spring.service.MemberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,13 +9,36 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringConfig {
 
-    @Bean   // 스프링 빈 등록
-    public MemberService memberService() {
-        return new MemberService(memberRepository());
+//    Jdbc, JPA 사용할 때의 코드.
+//    private final DataSource dataSource;
+//    private final EntityManager em;
+//
+//    public SpringConfig(DataSource dataSource, EntityManager em) {
+//        this.dataSource = dataSource;
+//        this.em = em;
+//    }
+
+    private final MemberRepository memberRepository;
+
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
+    @Bean   // 스프링 빈 등록
+    public MemberService memberService() {
+        return new MemberService(memberRepository);
+    }
+
+//    @Bean
+//    public MemberRepository memberRepository() {
+//        return new MemoryMemberRepository();
+//        return new JdbcMemberRepository(dataSource);
+//        return new JdbcTemplateMemberRepository(dataSource);
+//        return new JpaMemberRepository(em);
+//    }
+
     @Bean
-    public MemberRepository memberRepository() {
-        return new MemoryMemberRepository();
+    public TimeTraceAop timeTraceAop() {
+        return new TimeTraceAop();
     }
 }
